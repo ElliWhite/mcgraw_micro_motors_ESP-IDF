@@ -5,6 +5,15 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+bool g_enable_info_logs = true;         // global flag
+bool g_enable_uart_tx_logs = false;     // global flag
+bool g_enable_uart_rx_logs = false;     // global flag
+bool g_enable_i2c_logs = false;         // global flag
+bool g_enable_lvgl_logs = false;        // global flag
+bool g_enable_motor_logs = true;        // global flag
+bool g_enable_pid_logs = true;          // global flag
+bool g_enable_pcnt_logs = true;         // global flag
+
 void printESPInfo(){
 
     /* Print chip information */

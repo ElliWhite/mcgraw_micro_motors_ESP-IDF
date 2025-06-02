@@ -1,0 +1,4 @@
+{
+    "C_Cpp.default.compilerPath": "/home/elliott/.platformio/packages/toolchain-xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
+    "idf.pythonInstallPath": "/usr/bin/python3"
+}

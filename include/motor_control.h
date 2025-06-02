@@ -28,18 +28,14 @@ extern "C" {
 
 #define BDC_PID_LOOP_PERIOD_MS          10   // calculate the motor speed every 10ms
 
-extern float BDC_PID_EXPECT_SPEED_LEFT;     // expected motor speed, in the pulses counted by the rotary encoder every BDC_PID_LOOP_PERIOD_MS
-extern float BDC_PID_EXPECT_SPEED_RIGHT;
 
-extern float BDC_PID_EXPECT_SPEED_LEFT_MS;     // expected motor speed, in m/s
-extern float BDC_PID_EXPECT_SPEED_RIGHT_MS;     // expected motor speed, in m/s
+extern float BDC_PID_TARGET_SPEED_LEFT_MS;     // target motor speed, in m/s
+extern float BDC_PID_TARGET_SPEED_RIGHT_MS;     // target motor speed, in m/s
 
 #define WHEEL_RADIUS                    0.02    // m
 #define WHEEL_CIRCUMFERENCE             (2 * M_PI * WHEEL_RADIUS);
+#define WHEEL_BASE_M                    0.1     // distance between wheels in m
 
-static const char *TAG_MOTOR = "bdc_motor";
-static const char *TAG_PID = "pid";
-static const char *TAG_PCNT = "pcnt";
 
 typedef struct {
     bdc_motor_handle_t motor;

@@ -7,14 +7,13 @@
 #include "esp_log.h"
 #include "esp_check.h"
 #include "motor_control.h"
+#include "chip_utils.h"
 
 esp_timer_handle_t pid_loop_timer_left;      
 esp_timer_handle_t pid_loop_timer_right;
 
-float BDC_PID_EXPECT_SPEED_LEFT;
-float BDC_PID_EXPECT_SPEED_RIGHT;
-float BDC_PID_EXPECT_SPEED_LEFT_MS;     // expected motor speed, in m/s
-float BDC_PID_EXPECT_SPEED_RIGHT_MS;     // expected motor speed, in m/s
+float BDC_PID_TARGET_SPEED_LEFT_MS;     // target motor speed, in m/s
+float BDC_PID_TARGET_SPEED_RIGHT_MS;     // target motor speed, in m/s
 
 
 // Takes blank motor configs, then updates them and returns pointers to the configs
@@ -44,10 +43,10 @@ esp_err_t setupMotorControllers(bdc_motor_handle_t motor_left, bdc_motor_handle_
     ESP_ERROR_CHECK(bdc_motor_new_mcpwm_device(&motor_config_left, &mcpwm_config_left, &motor_left));      // If this fails, the ESP will reset. Returns configured motors
     //bdc_motor_handle_t motor_right = NULL;
     ESP_ERROR_CHECK(bdc_motor_new_mcpwm_device(&motor_config_right, &mcpwm_config_right, &motor_right));      // If this fails, the ESP will reset. Returns configured motors
-    ESP_LOGI(TAG_MOTOR, "Enable motors");
+    COND_ESP_LOGI(TAG_MOTOR, "Enable motors");
     ESP_ERROR_CHECK(bdc_motor_enable(motor_left));
     ESP_ERROR_CHECK(bdc_motor_enable(motor_right));
-    ESP_LOGI(TAG_MOTOR, "Forward motors");
+    COND_ESP_LOGI(TAG_MOTOR, "Forward motors");
     ESP_ERROR_CHECK(bdc_motor_forward(motor_left));
     ESP_ERROR_CHECK(bdc_motor_forward(motor_right));
     *ret_motor_left = motor_left;
@@ -77,7 +76,7 @@ void pid_loop_cb_left(void *args)
 
     // calculate the speed error
     //float error = BDC_PID_EXPECT_SPEED_LEFT - real_pulses;
-    float error = BDC_PID_EXPECT_SPEED_LEFT_MS - wheel_speed;
+    float error = BDC_PID_TARGET_SPEED_LEFT_MS - wheel_speed;
     float new_speed = 0;
 
     // set the new speed
@@ -106,7 +105,7 @@ void pid_loop_cb_right(void *args)
 
     // calculate the speed error
     //float error = BDC_PID_EXPECT_SPEED_LEFT - real_pulses;
-    float error = BDC_PID_EXPECT_SPEED_RIGHT_MS - wheel_speed;
+    float error = BDC_PID_TARGET_SPEED_RIGHT_MS - wheel_speed;
     float new_speed = 0;
 
     // set the new speed
@@ -216,11 +215,11 @@ esp_err_t setupPIDLoops(motor_control_context_t *motor_ctrl_ctx_left, motor_cont
  
     pid_loop_timer_left = NULL;
     pid_loop_timer_right = NULL;
-    ESP_LOGI(TAG_PID, "Create a timer to do PID calculation periodically - left motor");
+    COND_ESP_LOGI(TAG_PID, "Create a timer to do PID calculation periodically - left motor");
     ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args_left, &pid_loop_timer_left));
-    ESP_LOGI(TAG_PID, "Create a timer to do PID calculation periodically - right motor");
+    COND_ESP_LOGI(TAG_PID, "Create a timer to do PID calculation periodically - right motor");
     ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args_right, &pid_loop_timer_right));
-    ESP_LOGI(TAG_PID, "Start motor speed loops");
+    COND_ESP_LOGI(TAG_PID, "Start motor speed loops");
     ESP_ERROR_CHECK(esp_timer_start_periodic(pid_loop_timer_left, BDC_PID_LOOP_PERIOD_MS * 1000));
     ESP_ERROR_CHECK(esp_timer_start_periodic(pid_loop_timer_right, BDC_PID_LOOP_PERIOD_MS * 1000));
 
