@@ -2,13 +2,13 @@ dependencies:
   espressif/bdc_motor:
     component_hash: null
     source:
-      path: /home/elliott/Documents/PlatformIO/Projects/ESP32_Initial_API_Testing/components/espressif__bdc_motor
+      path: /home/elliott/Documents/PlatformIO/Projects/mcgraw_micro_motors_ESP-IDF/components/espressif__bdc_motor
       type: local
     version: 0.1.0
   espressif/pid_ctrl:
     component_hash: null
     source:
-      path: /home/elliott/Documents/PlatformIO/Projects/ESP32_Initial_API_Testing/components/espressif__pid_ctrl
+      path: /home/elliott/Documents/PlatformIO/Projects/mcgraw_micro_motors_ESP-IDF/components/espressif__pid_ctrl
       type: local
     version: 0.1.1
   idf:
@@ -16,6 +16,12 @@ dependencies:
     source:
       type: idf
     version: 5.3.1
-manifest_hash: 526dacdb760e5af02256f570134a62007a316d6e11c4d9871eb54a88162c2cb0
+  nimble_peripheral_utils:
+    component_hash: null
+    source:
+      path: /home/elliott/.platformio/packages/framework-espidf/examples/bluetooth/nimble/common/nimble_peripheral_utils
+      type: local
+    version: '*'
+manifest_hash: 0e9e429bf1b382f2644a2efc2d1b22cc642de8ddc82e795363b51100b89ccd4d
 target: esp32
 version: 1.0.0

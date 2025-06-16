@@ -1,4 +1,8 @@
 {
     "C_Cpp.default.compilerPath": "/home/elliott/.platformio/packages/toolchain-xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
-    "idf.pythonInstallPath": "/usr/bin/python3"
+    "idf.pythonInstallPath": "/usr/bin/python3",
+    "files.associations": {
+        "nvs_flash.h": "c",
+        "motor_control.h": "c"
+    }
 }
